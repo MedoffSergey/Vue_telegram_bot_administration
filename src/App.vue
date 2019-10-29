@@ -1,13 +1,16 @@
 <template lang='pug'>
-	div <!--Должен быть обернут в один div / рендерим компоненты -->
-		rating( :ratingList = 'ratingList' )
-		historyOption(:historyList = 'historyList')
+div <!--Должен быть обернут в один div / рендерим компоненты -->
+	navbar(@showHistory = 'showHistory'  @showRating = 'showRating')
+	div(v-if="page=='Rating'")
+		rating()
+	div(v-if="page=='History'")
+		historyOption()
 </template>
 
 
 <script>
-import axios from 'axios'; //Импортируем компоненты
 
+import navbar from './components/Navbar.vue';
 import rating from './components/Rating.vue';
 import historyOption from './components/HistoryOption.vue';
 
@@ -15,33 +18,24 @@ export default {
   name: 'app',
 
   components: { // Добавим локальные компоненты
+    navbar,
     rating,
-		historyOption
+    historyOption
   },
 
   data() { // Переменные которые можно использовать в шаблоне
     return {
-      ratingList: [],
-			historyList: []
+      page: "home"
     }
   },
 
-
-
-  mounted() { // Функция загрузки данных
-    this.refreshRatingList() // Вызываем methods refreshRatingList для обновления списка пользователей
-    this.refreshHistoryOptionList() // Вызываем methods refreshHistoryOptionList для обновления списка истории мнений
-  },
   methods: {
-    refreshRatingList() { //получаем таблицу с пользователями
-      axios.get('http://localhost:3000/rating')
-        .then(response => (this.ratingList = response.data))
-    },
-		refreshHistoryOptionList() { //получаем таблицу с пользователями
-      axios.get('http://localhost:3000/history')
-        .then(response => (this.historyList = response.data))
-    },
+		showHistory() {
+			this.page = 'History'
+		},
+		showRating() {
+			this.page = 'Rating'
+		}
   }
 }
-
 </script>
