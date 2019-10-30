@@ -28,6 +28,7 @@
 import axios from 'axios';
 
 export default {
+	props: ['page'],
   data() {
     return {
       historyList: []
@@ -35,6 +36,8 @@ export default {
   },
   mounted() { // Функция загрузки данных
     this.refreshHistoryOptionList() // Вызываем methods refreshRatingList для обновления списка пользователей
+		localStorage.setItem('localStoragePage',this.page)
+		this.page = localStorage.getItem(this.localStoragePage)
   },
   methods: {
     newDate(date) {

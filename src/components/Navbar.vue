@@ -8,6 +8,7 @@ div
 			b-navbar-nav.h5
 				b-nav-item(href="#" @click='showHistoryTable') History
 				b-nav-item(href="#" @click='showRatingTable') Rating
+				b-nav-item(href="#" @click='showUsersTable') Users
 </template>
 
 
@@ -19,7 +20,10 @@ export default {
     },
     showRatingTable() {
       this.$emit("showRating")
-    }
+    },
+		showUsersTable() {
+			this.$emit("showUsers")
+		}
   }
 }
 </script>

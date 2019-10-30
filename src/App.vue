@@ -1,10 +1,12 @@
 <template lang='pug'>
 div <!--Должен быть обернут в один div / рендерим компоненты -->
-	navbar(@showHistory = 'showHistory'  @showRating = 'showRating')
+	navbar(@showHistory = 'showHistory'  @showRating = 'showRating'  @showUsers = 'showUsers')
 	div(v-if="page=='Rating'")
-		rating()
+		rating(:page = 'page')
 	div(v-if="page=='History'")
-		historyOption()
+		historyOption(:page = 'page')
+	div(v-if="page=='Users'")
+		userlist(:page = 'page')
 </template>
 
 
@@ -13,6 +15,7 @@ div <!--Должен быть обернут в один div / рендерим 
 import navbar from './components/Navbar.vue';
 import rating from './components/Rating.vue';
 import historyOption from './components/HistoryOption.vue';
+import userlist from './components/UserList.vue';
 
 export default {
   name: 'app',
@@ -20,21 +23,29 @@ export default {
   components: { // Добавим локальные компоненты
     navbar,
     rating,
-    historyOption
+    historyOption,
+		userlist
   },
 
   data() { // Переменные которые можно использовать в шаблоне
     return {
-      page: "home"
+      page: "",
+			localStoragePage : ''
     }
   },
 
+		mounted() { // Функция загрузки данных
+			this.page = localStorage.getItem('localStoragePage')
+	},
   methods: {
 		showHistory() {
 			this.page = 'History'
 		},
 		showRating() {
 			this.page = 'Rating'
+		},
+		showUsers() {
+			this.page = 'Users'
 		}
   }
 }

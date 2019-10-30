@@ -21,15 +21,18 @@
 import axios from 'axios';
 
 export default {
-
+	props: ['page'],
   data() {
     return {
       ratingList: []
     }
   },
-  mounted() {
-    this.refreshRatingList() // Вызываем methods refreshRatingList для обновления списка пользователей
-  },
+		mounted() { // Функция загрузки данных
+			this.refreshRatingList() // Вызываем methods refreshRatingList для обновления списка пользователей
+			localStorage.setItem('localStoragePage',this.page)
+			this.page = localStorage.getItem(this.localStoragePage)
+	},
+
 
   methods: {
     refreshRatingList() { //получаем таблицу с пользователями
